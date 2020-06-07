@@ -7,7 +7,7 @@ santa = Books(title="Santa Evita", year="1991", topic="Novela", author_id=1);
 muerte = Books(title="Lugar Comun La muerte", year="1982", topic="Cronicas", author_id=1);
 padrino = Books(title="El padrino", year="1968", topic="Novela", author_id=4);
 soho = Books(title="Soho", year="2012", topic="Cronicas", author_id=6);
-enterrador = Books(title="El enterrador", year="2014", topic="Ensayo", author_id=2)
+enterrador = Books(title="El enterrador", year="2014", topic="Ensayo", author_id=2);
 
 db.session.add(rayuela);
 db.session.add(broma);
@@ -20,12 +20,12 @@ db.session.add(enterrador);
 
 db.session.commit()
 
-eloy = Authors(name="Tomas Eloy Martinez", country="Argentina")
-thomas = Authors(name="Thomas Linchy", country="Estados Unidos")
-wallace = Authors(name="David Foster Wallace", country="Estados Unidos")
-puzzo = Authors(name="Mario Puzzo", country="Italia")
-cortazar = Authors(name="Julio Cortazar", country="Argentina")
-vvaa = Authors(name="VVAA", country="VVPP")
+eloy = Authors(name="Tomas Eloy Martinez", country="Argentina");
+thomas = Authors(name="Thomas Linchy", country="Estados Unidos");
+wallace = Authors(name="David Foster Wallace", country="Estados Unidos");
+puzzo = Authors(name="Mario Puzzo", country="Italia");
+cortazar = Authors(name="Julio Cortazar", country="Argentina");
+vvaa = Authors(name="VVAA", country="VVPP");
 
 db.session.add(eloy);
 db.session.add(thomas);

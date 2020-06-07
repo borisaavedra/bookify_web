@@ -34,7 +34,7 @@ def index():
     authors_db = Authors.query.all()
 
     for item in books_db:
-        books = item.title
+        book = Books.query.
 
     return render_template("index.html", books=books)
 
