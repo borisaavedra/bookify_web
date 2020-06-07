@@ -1,0 +1,47 @@
+db.create_all()
+
+rayuela = Books(title="Rayuela", year="1968", topic="Novela", author_id=5);
+broma = Books(title="La broma infinita", year="2001", topic="Novela", author_id=3);
+rey = Books(title="El rey palido", year="2011", topic="Novela", author_id=3);
+santa = Books(title="Santa Evita", year="1991", topic="Novela", author_id=1);
+muerte = Books(title="Lugar Comun La muerte", year="1982", topic="Cronicas", author_id=1);
+padrino = Books(title="El padrino", year="1968", topic="Novela", author_id=4);
+soho = Books(title="Soho", year="2012", topic="Cronicas", author_id=6);
+enterrador = Books(title="El enterrador", year="2014", topic="Ensayo", author_id=2)
+
+db.session.add(rayuela);
+db.session.add(broma);
+db.session.add(rey);
+db.session.add(santa);
+db.session.add(muerte);
+db.session.add(padrino);
+db.session.add(soho);
+db.session.add(enterrador);
+
+db.session.commit()
+
+eloy = Authors(name="Tomas Eloy Martinez", country="Argentina")
+thomas = Authors(name="Thomas Linchy", country="Estados Unidos")
+wallace = Authors(name="David Foster Wallace", country="Estados Unidos")
+puzzo = Authors(name="Mario Puzzo", country="Italia")
+cortazar = Authors(name="Julio Cortazar", country="Argentina")
+vvaa = Authors(name="VVAA", country="VVPP")
+
+db.session.add(eloy);
+db.session.add(thomas);
+db.session.add(wallace);
+db.session.add(cortazar);
+db.session.add(vvaa);
+
+    author_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    country = db.Column(db.String(200))
+    books = db.relationship("Books", backref="authors", lazy=True)
+
+
+
+book_id = db.Column(db.Interger, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    year = db.Column(db.Interger)
+    topic = db.Column(db.String(100))
+    author_id
