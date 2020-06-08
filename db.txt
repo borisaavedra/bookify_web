@@ -45,3 +45,69 @@ book_id = db.Column(db.Interger, primary_key=True)
     year = db.Column(db.Interger)
     topic = db.Column(db.String(100))
     author_id
+    
+    evita = "https://images-na.ssl-images-amazon.com/images/I/41FBtYYfULL._SY445_QL70_ML2_.jpg" 
+    muerte = "https://images-na.ssl-images-amazon.com/images/I/81aFM7sP1qL.jpg"
+    enterrador = "https://images-na.ssl-images-amazon.com/images/I/41bEf-IY68L._SX303_BO1,204,203,200_.jpg"
+    broma = "https://img1.od-cdn.com/ImageType-400/5835-1/798/F81/68/%7B798F8168-8F7C-4062-80C4-623054D9A70C%7DImg400.jpg"
+    rey = "https://i.pinimg.com/originals/a7/1f/1c/a71f1c473b5158c1ee0505331d4cad90.jpg"
+    rayuela = "https://www.actualidadliteratura.com/wp-content/uploads/2017/02/An%C3%A1lisis-de-Rayuela-de-Julio-Cort%C3%A1zar.jpg"
+    soho = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqQe6oggc0aaCdFZo4_wDMEovlqUH6qhlM8FVCnkVSguMsb91V&usqp=CAU"
+    padrino = "https://img1.od-cdn.com/ImageType-400/5835-1/5A4/1D0/D9/%7B5A41D0D9-35DC-4DB9-8F4B-AB20674F4B5F%7DImg400.jpg"
+
+UPDATE books
+    SET cover_url = "https://images-na.ssl-images-amazon.com/images/I/41FBtYYfULL._SY445_QL70_ML2_.jpg", 
+        cover_url = "https://images-na.ssl-images-amazon.com/images/I/81aFM7sP1qL.jpg",
+        cover_url = "https://images-na.ssl-images-amazon.com/images/I/41bEf-IY68L._SX303_BO1,204,203,200_.jpg",
+        cover_url = "https://img1.od-cdn.com/ImageType-400/5835-1/798/F81/68/%7B798F8168-8F7C-4062-80C4-623054D9A70C%7DImg400.jpg",
+        cover_url = "https://i.pinimg.com/originals/a7/1f/1c/a71f1c473b5158c1ee0505331d4cad90.jpg",
+        cover_url = "https://www.actualidadliteratura.com/wp-content/uploads/2017/02/An%C3%A1lisis-de-Rayuela-de-Julio-Cort%C3%A1zar.jpg",
+        cover_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqQe6oggc0aaCdFZo4_wDMEovlqUH6qhlM8FVCnkVSguMsb91V&usqp=CAU",
+        cover_url = "https://img1.od-cdn.com/ImageType-400/5835-1/5A4/1D0/D9/%7B5A41D0D9-35DC-4DB9-8F4B-AB20674F4B5F%7DImg400.jpg"
+    WHERE 
+        book_id = 27,
+        book_id = 28,
+        book_id = 34,
+        book_id = 21,
+        book_id = 22,
+        book_id = 8,
+        book_id = 33,
+        book_id = 31;
+
+
+SELECT b.book_id, b.title, a.name, b.cover_url FROM books AS b JOIN authors AS a ON b.author_id = a.author_id; 
+
+UPDATE books
+    SET cover_url = "https://images-na.ssl-images-amazon.com/images/I/41FBtYYfULL._SY445_QL70_ML2_.jpg"
+     WHERE 
+        book_id = 27;
+
+UPDATE books
+    SET cover_url = "https://images-na.ssl-images-amazon.com/images/I/81aFM7sP1qL.jpg"
+    WHERE book_id = 28;
+
+UPDATE books
+    SET cover_url = "https://images-na.ssl-images-amazon.com/images/I/41bEf-IY68L._SX303_BO1,204,203,200_.jpg"
+    WHERE book_id = 34;
+
+UPDATE books
+    SET cover_url = "https://img1.od-cdn.com/ImageType-400/5835-1/798/F81/68/%7B798F8168-8F7C-4062-80C4-623054D9A70C%7DImg400.jpg"
+    WHERE book_id = 21;
+
+UPDATE books
+    SET cover_url = "https://i.pinimg.com/originals/a7/1f/1c/a71f1c473b5158c1ee0505331d4cad90.jpg"
+    WHERE book_id = 22;
+
+UPDATE books
+    SET cover_url = "https://www.actualidadliteratura.com/wp-content/uploads/2017/02/An%C3%A1lisis-de-Rayuela-de-Julio-Cort%C3%A1zar.jpg"
+    WHERE book_id = 8;
+
+UPDATE books
+    SET cover_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqQe6oggc0aaCdFZo4_wDMEovlqUH6qhlM8FVCnkVSguMsb91V&usqp=CAU"
+    WHERE book_id = 33;
+
+UPDATE books
+    SET cover_url = "https://img1.od-cdn.com/ImageType-400/5835-1/5A4/1D0/D9/%7B5A41D0D9-35DC-4DB9-8F4B-AB20674F4B5F%7DImg400.jpg"
+    WHERE book_id = 31;
+
+        
