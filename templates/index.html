@@ -12,8 +12,44 @@
         <div class="card my-3" style="width: 18rem;">
             <img src="{{  book.cover_url }}" class="card-img-top" alt="...">
             <div class="card-body">
-            <h5 class="card-title">{{ book.tile }}</h5>
+            <h5 class="card-title">{{ book.title }}&nbsp;({{ book.year }})</h5>
             <p class="card-text">{{ book.author }}</p>
+            <p class="card.text">{{ book.topic }}</p>
+            <a href="#" id="" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Modal-{{ book.book_id }}">Edit</a>
+            
+            <!-- MODAL -->
+            <div class="modal fade" id="Modal-{{ book.book_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="/{{ book.book_id }}" method="POST">
+                      <div class="modal-body">
+                  
+                          <label for="" id="title">Title</label>
+                          <input type="text" class="form-control mb-3" name="title" id="title" value="{{ book.title }}">
+                          <label for="" id="author">Author</label>
+                          <input type="text" class="form-control mb-3" name="author" id="author" value="{{ book.author }}">
+                          <label for="" id="year">Year</label>
+                          <input type="text" class="form-control mb-3" name="year" id="year" value="{{ book.year }}">
+                          <label for="" id="topic">Topic</label>
+                          <input type="text" class="form-control mb-3" name="topic" id="topic" value="{{ book.topic }}">
+                          <label for="" id="cover_url">Cover URL</label>
+                          <input type="text" class="form-control mb-3" name="cover_url" id="cover_url" value="{{ book.cover_url }}">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <!-- MODAL -->
             </div>
         </div>   
     {% endfor %}
