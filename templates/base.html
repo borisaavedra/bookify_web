@@ -15,9 +15,44 @@
     </title>
   </head>
   <body>
-    {% block content %}
-        
-    {% endblock content %}
+    <nav class="navbar bg-dark">
+      <a class="navbar-brand"  href="#">
+        <svg style="fill: white;" class="d-inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M3 2.75A2.75 2.75 0 015.75 0h14.5a.75.75 0 01.75.75v20.5a.75.75 0 01-.75.75h-6a.75.75 0 010-1.5h5.25v-4H6A1.5 1.5 0 004.5 18v.75c0 .716.43 1.334 1.05 1.605a.75.75 0 01-.6 1.374A3.25 3.25 0 013 18.75v-16zM19.5 1.5V15H6c-.546 0-1.059.146-1.5.401V2.75c0-.69.56-1.25 1.25-1.25H19.5z"></path><path d="M7 18.25a.25.25 0 01.25-.25h5a.25.25 0 01.25.25v5.01a.25.25 0 01-.397.201l-2.206-1.604a.25.25 0 00-.294 0L7.397 23.46a.25.25 0 01-.397-.2v-5.01z"></path></svg>
+        <span style="color: white;"><strong>Bookifly</strong></span> 
+      </a>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2">
+          {%- block leftpanel -%}
+            <a href="{% block hrefList %}{% endblock hrefList %}" class="btn btn-secondary btn-block mt-5 {% block disabledList %}{% endblock disabledList %}" tabindex="-1" role="button" aria-disabled="true">My Book list</a>
+            <a href="{% block hrefBook %}{% endblock hrefBook %}" class="btn btn-secondary btn-block {% block disabledBook %}{% endblock disabledBook %}" tabindex="-1" role="button" aria-disabled="true">Add Book</a>
+            <a href="{% block hrefAuthor %}{% endblock hrefAuthor %}" class="btn btn-secondary btn-block {% block disabledAuthor %}{% endblock disabledAuthor %}" tabindex="-1" role="button" aria-disabled="true">Add Author</a>
+          {%- endblock leftpanel -%}
+
+        </div>
+        <div class="col">
+          <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div> 
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

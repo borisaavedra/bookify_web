@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ super() }}
+        Add Book    
+{% endblock title %}
+
+{% block disabledAuthor %} 
+  {{ super() }} 
+    disabled
+{% endblock disabledAuthor %}
+
+{% block hrefList %}
+  {{ super() }}
+    /
+{% endblock hrefList %}
+
+{% block hrefBook %}
+  {{ super() }}
+    /add-book
+{% endblock hrefBook %}
+
+{% block content %}
+    <h4>Add AUTHOR!</h4>
+{% endblock content %}

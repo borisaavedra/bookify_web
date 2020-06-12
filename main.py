@@ -1,8 +1,6 @@
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_sqlalchemy import SQLAlchemy
-# from flask_wtf import FlaskForm
-# from wtforms.fields import StringField, SubmitField
-# from wtforms.validators import DataRequired, URL
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "A QUe No la AdivinAS"
@@ -20,13 +18,6 @@ class BooksAuthors:
         self.topic = topic
         self.cover_url = cover_url
 
-# class AddBook(FlaskForm):
-#     title = StringField(u"Title", validators=[DataRequired()], render_kw={"ng-madel":"NameModel"})
-#     author = StringField("Author", validators=[DataRequired()])
-#     year = StringField("Year", validators=[DataRequired()])
-#     topic = StringField("Topic", validators=[DataRequired()])
-#     cover_url = StringField("Cover URL", validators=[URL(), DataRequired()])
-#     submit = SubmitField("Save changes")
 
 class Books(db.Model):
     book_id = db.Column(db.Integer, primary_key=True)
@@ -44,15 +35,14 @@ class Authors(db.Model):
     books = db.relationship("Books", backref="authors", lazy=True)
 
 
-@app.route("/", defaults={"book_id_url":-1}, methods=["POST", "GET"])
-@app.route("/<book_id_url>", methods=["POST", "GET"])
-def index(book_id_url):
+@app.route("/", defaults={"book_id_url":-1, "delete": 0}, methods=["POST", "GET"])
+@app.route("/<book_id_url>/<delete>", methods=["POST", "GET"])
+def index(book_id_url, delete):
 
     books = []
-    
-    # book_data = AddBook()
 
     books_db = Books.query.all()
+    authors_db = Authors.query.all()
 
     for book in books_db:
         author_db = Authors.query.filter_by(author_id=book.author_id).first()
@@ -66,37 +56,72 @@ def index(book_id_url):
             book.cover_url)) 
 
     if request.method == "POST":
-        book_toedit = Books.query.filter_by(book_id=book_id_url).first()
+        if int(delete):
+            book_deleted = Books.query.filter_by(book_id=book_id_url).first()
+            db.session.delete(book_deleted)
 
-        book_edited = request.form
+            try:
+                db.session.commit()
+                flash("Book deleted! 😮", "success")
+                return redirect(url_for("index"))
+            except:
+                flash("Something went wrong 😓", "danger")
+                return redirect(url_for("index"))
+        else:
+            book_toedit = Books.query.filter_by(book_id=book_id_url).first()
 
-        book_toedit.title = book_edited["title"]
-        book_toedit.year = book_edited["year"]
-        book_toedit.topic = book_edited["topic"]
-        book_toedit.cover_url = book_edited["cover_url"]
+            book_edited = request.form
 
-        db.session.commit()
+            book_toedit.title = book_edited["title"]
+            book_toedit.year = book_edited["year"]
+            book_toedit.topic = book_edited["topic"]
+            book_toedit.author_id = book_edited["author"]
+            book_toedit.cover_url = book_edited["cover_url"]
+            
+            db.session.commit()
 
-        return redirect(url_for("index"))
+            return redirect(url_for("index"))
         
     context = {
         "books": books,
-        # "book_data": book_data 
+        "authors": authors_db
     }
 
     return render_template("index.html", **context)
 
 
-@app.route("/add")
+@app.route("/add-book", methods=["GET", "POST"])
 def add_Book():
-    return "Add book"
+    authors_db = Authors.query.all()
+
+    context = {
+        "authors": authors_db
+    }
+
+    if request.method == "POST":
+        new_book = request.form
+
+        book = Books(
+            title=new_book["title"],
+            year=new_book["year"],
+            topic=new_book["topic"],
+            cover_url=new_book["cover_url"],
+            author_id=new_book["author"]
+        )
+
+        db.session.add(book)
+
+        try:
+            db.session.commit()
+            flash("Book added! 🤘", "success")
+            return redirect(url_for("add_Book"))
+        except:
+            flash("Something went wrong 😓", "danger")
+            return redirect(url_for("add_Book"))
+
+    return render_template("add-book.html", **context)
 
 
-@app.route("/delete")
-def delete_Book():
-    return "Delete book"
-
-
-@app.route("/edit")
-def edit_Book():
-    return "Edit a book"
+@app.route("/add-author")
+def add_Author():
+    return render_template("add-author.html")
