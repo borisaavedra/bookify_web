@@ -110,4 +110,12 @@ UPDATE books
     SET cover_url = "https://img1.od-cdn.com/ImageType-400/5835-1/5A4/1D0/D9/%7B5A41D0D9-35DC-4DB9-8F4B-AB20674F4B5F%7DImg400.jpg"
     WHERE book_id = 31;
 
+DELETE FROM books  
+    WHERE book_id = 35, book_id = 36
+    LIMIT 2;
+
+DELETE FROM books  
+    WHERE book_id = 36
+    LIMIT 2
+
         
