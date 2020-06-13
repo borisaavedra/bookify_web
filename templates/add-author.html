@@ -21,5 +21,96 @@
 {% endblock hrefBook %}
 
 {% block content %}
-    <h4>Add AUTHOR!</h4>
+  <div class="container">
+    <h1>Authors</h1>
+    <div class="my-3">
+      <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#Modal-add-author">Add Author</a>
+    </div>
+     <!-- MODAL -->
+     <div class="modal fade" id="Modal-add-author" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Author</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="/add-author" method="POST">
+            <div class="modal-body">
+                <label for="author" id="author">Name</label>
+                <input type="text" class="form-control mb-3" name="author" id="author">
+                <label for="country">Country</label>
+                <input type="text" class="form-control mb-3" name="country" id="country">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->
+      <table class="table table-hover">
+        <thead>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Country</th>
+          <th scope="col">Books Stored</th>
+          <th scope="col">Actions</th>
+        </thead>
+        <tbody>
+          {% for author in authors %}
+            <tr>
+              <th scope="row">{{ author.author_id }}</th>
+              <td>{{ author.author }}</td> 
+              <td>{{ author.country }}</td>
+              <td>{{ author.book_count }}</td>
+              <td>
+                <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Modal-{{ author.author_id }}">
+                  <i class="far fa-edit"></i>
+                </a>
+                <!-- MODAL -->
+                <div class="modal fade" id="Modal-{{ author.author_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Author</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <form action="/add-author/{{ author.author_id }}/{{ 0 }}" method="POST">
+                        <div class="modal-body">
+                            <label for="author" id="author">Name</label>
+                            <input type="text" class="form-control mb-3" name="author" id="author" value="{{ author.author }}">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control mb-3" name="country" id="country" value="{{ author.country }}">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- MODAL -->
+                {% if author.book_count > 0 %}
+                  {%- set status = "disabled" -%}
+                {% endif %}
+                <form action="/add-author/{{ author.author_id }}/{{ 1 }}" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-outline-danger" {{ status }}>
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </form>
+              </th>
+            </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+  </div>
+    
 {% endblock content %}

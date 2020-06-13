@@ -9,7 +9,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 class BooksAuthors:
-    def __init__(self, book_id, title, author_id, author, year, topic, cover_url):
+    def __init__(self, book_id, title, author_id, author, year, topic, cover_url, book_count, country):
         self.book_id = book_id
         self.title = title
         self.author_id = author_id
@@ -17,6 +17,8 @@ class BooksAuthors:
         self.year = year
         self.topic = topic
         self.cover_url = cover_url
+        self.book_count = book_count
+        self.country = country
 
 
 class Books(db.Model):
@@ -53,12 +55,15 @@ def index(book_id_url, delete):
             author_db.name, 
             book.year, 
             book.topic, 
-            book.cover_url)) 
+            book.cover_url,
+            book_count=0,
+            country = "0"
+        )) 
 
     if request.method == "POST":
+        book_toedit = Books.query.filter_by(book_id=book_id_url).first()
         if int(delete):
-            book_deleted = Books.query.filter_by(book_id=book_id_url).first()
-            db.session.delete(book_deleted)
+            db.session.delete(book_toedit)
 
             try:
                 db.session.commit()
@@ -81,7 +86,7 @@ def index(book_id_url, delete):
             db.session.commit()
 
             return redirect(url_for("index"))
-        
+
     context = {
         "books": books,
         "authors": authors_db
@@ -122,6 +127,65 @@ def add_Book():
     return render_template("add-book.html", **context)
 
 
-@app.route("/add-author")
-def add_Author():
-    return render_template("add-author.html")
+@app.route("/add-author", defaults={"author_id_url":-1, "delete": 0}, methods=["POST", "GET"])
+@app.route("/add-author/<author_id_url>/<delete>", methods=["POST", "GET"])
+def add_Author(author_id_url, delete):
+
+    authors_db = Authors.query.all()
+    authors = []
+
+    for author in authors_db:
+        num_books = Books.query.filter_by(author_id=author.author_id).count()
+        authors.append(
+            BooksAuthors(
+                author_id = author.author_id,
+                author = author.name,
+                country = author.country,
+                book_count = num_books,
+                book_id = 0,
+                title = "0",
+                year = 0,
+                topic = "0",
+                cover_url = "0"
+            )
+        )
+        
+    if request.method == "POST":
+            author_toedit = Authors.query.filter_by(author_id=author_id_url).first()
+            if int(delete):
+                print("----> DELETE AUTHOR")
+                db.session.delete(author_toedit)
+                try:
+                    db.session.commit()
+                    flash("Author deleted 😮", "success")
+                    return redirect(url_for("add_Author"))
+                except:
+                    flash("Something went wrong 😓", "danger")
+            elif int(author_id_url) > 0:
+                author_edited = request.form
+                author_toedit.name = author_edited["author"]
+                author_toedit.country = author_edited["country"]
+
+                try:
+                    db.session.commit()
+                    flash("Author edited successfuly 😎", "success")
+                    return redirect(url_for("add_Author"))
+                except:
+                    flash("Something went wrong 😓", "danger")
+            else:
+                author_toadd = request.form
+                print(author_toadd["author"])
+                new_author = Authors(name=author_toadd["author"], country=author_toadd["country"])
+                db.session.add(new_author)
+            try:
+                db.session.commit()
+                flash("New Author added 😎", "success")
+                return redirect(url_for("add_Author"))
+            except:
+                flash("Something went wrong 😯", "danger")
+
+    context = {
+        "authors": authors,
+    }
+
+    return render_template("add-author.html", **context)

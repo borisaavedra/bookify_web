@@ -118,4 +118,5 @@ DELETE FROM books
     WHERE book_id = 36
     LIMIT 2
 
+Books.query.filter_by(author_id=1).count()
         
