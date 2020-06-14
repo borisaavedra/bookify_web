@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "A QUe No la AdivinAS"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:b5819@localhost/bookify_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////bookify_db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
