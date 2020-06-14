@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "A QUe No la AdivinAS"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////bookify_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///bookify_db.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -192,4 +192,5 @@ def add_Author(author_id_url, delete):
 
 
 if __name__ == "__main__":
+    db.create_all()
     app.run()
