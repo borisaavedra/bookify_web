@@ -189,3 +189,7 @@ def add_Author(author_id_url, delete):
     }
 
     return render_template("add-author.html", **context)
+
+
+if __name__ == "__main__":
+    app.run()
