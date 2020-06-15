@@ -27,7 +27,7 @@ class Books(db.Model):
     year = db.Column(db.Integer)
     topic = db.Column(db.String(100))
     cover_url = db.Column(db.String)
-    author_id = db.Column(db.Integer, db.ForeignKey("authors.author_id"))
+    author_id = db.Column(db.Integer, db.ForeignKey("authors.author_id"), nullable=False)
 
 
 class Authors(db.Model):
@@ -117,11 +117,12 @@ def add_Book():
         db.session.add(book)
 
         try:
+            print(new_book["author"])
             db.session.commit()
             flash("Book added! 🤘", "success")
             return redirect(url_for("add_Book"))
         except:
-            flash("Something went wrong 😓", "danger")
+            flash("Something went wrong 😓. Please try again", "danger")
             return redirect(url_for("add_Book"))
 
     return render_template("add-book.html", **context)
@@ -191,6 +192,6 @@ def add_Author(author_id_url, delete):
     return render_template("add-author.html", **context)
 
 
-if __name__ == "__main__":
-    db.create_all()
-    app.run()
+# if __name__ == "__main__":
+#     db.create_all()
+#     app.run()
