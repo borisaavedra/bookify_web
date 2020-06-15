@@ -193,5 +193,5 @@ def add_Author(author_id_url, delete):
 
 
 if __name__ == "__main__":
-    # db.create_all()
+    db.create_all()
     app.run()
