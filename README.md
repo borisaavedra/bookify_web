@@ -1,2 +1,2 @@
-# bookify_web
+# Bookify web
 A web based library coded in Python 
