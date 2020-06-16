@@ -29,7 +29,7 @@
             <input type="text" class="form-control mb-3" name="title" id="title" required>
             <label for="author">Select an Author</label>
             <select class="form-control mb-3" style="color:lightslategrey;" id="author" name="author" required>
-                <option style="color:lightslategrey;" disabled selected hidden>--Pick one--</option>
+                <!-- <option style="color:lightslategrey;" disabled selected hidden value="-1">--Pick one--</option> -->
                 {% for author in authors %}
                     <option style="color:black" value="{{ author.author_id }}">{{ author.name }}</option>
                 {% endfor %}
